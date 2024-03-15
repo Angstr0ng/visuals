@@ -1,0 +1,239 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:200i,400&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.3),
+        rgba(0, 0, 0, 7)
+    ), url(geometry.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    object-fit: cover;
+    background-attachment: fixed;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 35px;
+}
+
+nav ul {
+    width: 85%;
+    position: fixed;
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.3);
+    height: 60px;
+    box-shadow: 0px 1px 5px 5px rgba(0, 0, 0, 0.4);
+}
+
+nav ul img {
+    width: 70px;
+    height: 50px;
+    filter: invert(20%);
+    margin-right: auto;
+    padding: 10px;
+}
+
+nav a {
+    height: 100%;
+    padding: 0 30px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    color: #1f1f1f;
+    text-transform: uppercase;
+}
+
+nav a:hover {
+    color: rgb(14, 91, 110);
+    font-weight: 700;
+}
+
+nav ul svg {
+    filter: invert(100%);
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 250px;
+    z-index: 999;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    box-shadow: -10px 0 10px rgba(0, 0, 0, 0.2);
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.sidebar li {
+    width: 100%;
+}
+
+.sidebar a {
+    width: 100%;
+}
+
+.menu-button {
+    display: none;
+}
+
+@media(max-width: 800px){
+    .hideOnMobile {
+        display: none;
+    }
+    .menu-button {
+        display: block;
+    }
+}
+@media(max-width: 400px){
+    .sidebar {
+        width: 100%;
+    }
+}
+
+main {
+    color: #f2f2f2;
+}
+
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #f2f2f2;
+    width: 600px;
+    margin: 0 auto;
+}
+
+.hero-content p {
+    font-size: 15px;
+    word-spacing: 5px;
+    letter-spacing: 0.5px;
+    font-weight: 300;
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 1);
+}
+
+.hero-content h2 {
+    font-size: 24px;
+    word-spacing: 3px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-top: 16px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 1);
+}
+
+@media (max-width: 768px) {
+    .hero-content {
+        width: 80%;
+    }
+
+    .hero-content p {
+        font-size: 14px;
+        word-spacing: 0.5rem;
+        letter-spacing: 0.1rem;
+        font-weight: 600;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 1);
+    }
+
+    .hero-content h2 {
+        font-size: 20px;
+        word-spacing: 0.5rem;
+        letter-spacing: 0.1rem;
+        font-weight: 600;
+        margin-top: 1rem;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 1);
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content {
+        width: 90%;
+    }
+
+    .hero-content p {
+        font-size: 12px;
+        word-spacing: 0.3rem;
+        letter-spacing: 0.1rem;
+        font-weight: 600;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 1);
+    }
+
+    .hero-content h2 {
+        font-size: 18px;
+        word-spacing: 0.3rem;
+        letter-spacing: 0.1rem;
+        font-weight: 600;
+        margin-top: 0.5rem;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 1);
+    }
+}
+
+.hero-content button a {
+    text-decoration: none;
+    color: #f2f2f2;
+}
+
+.hero-content button {
+    width: 160px;
+    padding: 15px 0px;
+    text-align: center;
+    margin: 40px 10px;
+    font-weight: bold;
+    border-radius: 20px;
+    border: 1px solid rgb(43, 199, 238);
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content span {
+    background: rgb(43, 199, 238);
+    width: 0;
+    height: 100%;
+    border-radius: 20px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    transition: 0.5s;
+}
+
+.hero-content button a:active {
+    color: rgb(43, 199, 238);
+}
+
+.hero-content button:hover span {
+    width: 100%;
+}
+
+.hero-content button:hover a {
+    color: #1f1f1f;
+}
+
+.hero-content button:hover {
+    border: none;
+}
+
+.about {
+    display: none;
+}

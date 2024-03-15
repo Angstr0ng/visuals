@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animated Electromagnetic Field Simulation</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    body {
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.3),
+      rgba(0, 0, 0, 7)
+      ), url(geometry.jpg);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      object-fit: cover;
+      background-attachment: fixed;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    #education-content {
+      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for content */
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: 30px auto;
+      font-size: 15px;
+      word-spacing: normal;
+      letter-spacing: 0.5px;
+      font-weight: 300;
+      text-shadow: 3px 3px 5px rgba(0, 0, 0, 1);
+    }
+
+    .button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 10px 20px;
+      background-color: #555;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background-color: #777;
+      color: rgb(14, 91, 110);
+      font-weight: 700;
+    }
+
+    #field-chart {
+      width: 100%;
+      height: 400px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+    <a href="index.html"><button class="button">Home</button></a>
+
+<!-- Education Content -->
+<div id="education-content">
+  <h2>Understanding Electromagnetic Fields</h2>
+  <p>
+    Electromagnetic fields are produced by electrically charged particles. They are essential in various physical phenomena, including light, magnetism, and electrical currents.
+  </p>
+  <p>
+    Adjust the electric and magnetic field strengths below to see how they affect the behavior of electromagnetic fields.
+  </p>
+</div>
+
+<!-- Electromagnetic Field Visualization Chart -->
+<div id="field-chart"></div>
+
+<!-- Input Controls for Parameters -->
+<label for="electric-field-slider">Electric Field Strength:</label>
+<input id="electric-field-slider" type="range" min="0" max="10" value="5" step="0.1" onchange="updateChart()">
+
+<label for="magnetic-field-slider">Magnetic Field Strength:</label>
+<input id="magnetic-field-slider" type="range" min="0" max="10" value="5" step="0.1" onchange="updateChart()">
+
+<!-- JavaScript Functions -->
+<script>
+  const chart = document.getElementById('field-chart');
+  let time = 0;
+
+  const updateChart = () => {
+    const electricFieldStrength = document.getElementById('electric-field-slider').value;
+    const magneticFieldStrength = document.getElementById('magnetic-field-slider').value;
+
+    const xValues = [];
+    const yValues = [];
+    for (let x = 0; x <= 10; x += 0.1) {
+      xValues.push(x);
+      yValues.push(Math.sin(x * electricFieldStrength - time) + Math.cos(x * magneticFieldStrength - time));
+    }
+
+    Plotly.animate(chart, {
+      data: [{ x: xValues, y: yValues }]
+    }, {
+      transition: { duration: 500, easing: 'linear' }, // Reduced duration for quicker updates
+      frame: { duration: 500, redraw: true }
+    });
+
+    time += 0.1;
+  };
+
+  const data = [{
+    x: Array.from({ length: 1001 }, (_, i) => i / 100),
+    y: Array.from({ length: 1001 }, (_, i) => Math.sin(i / 10) + Math.cos(i / 10)), // Initial field data
+    type: 'scatter',
+    mode: 'lines',
+    line: {
+      color: 'green',
+      width: 2
+    }
+  }];
+
+  const layout = {
+    title: 'Animated Electromagnetic Field Simulation',
+    xaxis: { title: 'Distance' },
+    yaxis: { title: 'Field Strength' },
+    plot_bgcolor: '#111',
+    paper_bgcolor: '#111'
+  };
+
+  Plotly.newPlot(chart, data, layout);
+
+  const updateInterval = 25; // Update interval in milliseconds (increase for smoother animation)
+  setInterval(() => updateChart(), updateInterval); // Update chart at the specified interval
+</script>
+
+</body>
+</html>

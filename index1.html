@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moving Wave Simulation</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Poppins:200i,400&display=swap');
+
+    body {
+      background-color: #111;
+      color: #f1f1f1;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .background-img {
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.3),
+        rgba(0, 0, 0, 7)
+      ), url(geometry.jpg);
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .edu-content {
+      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for content */
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 15px;
+      word-spacing: normal;
+      letter-spacing: 0.5px;
+      font-weight: 300;
+      text-shadow: 3px 3px 5px rgba(0, 0, 0, 1);
+    }
+
+    #wave-chart-container {
+      padding: 20px; 
+      border-radius: 10px; 
+      max-width: 100%;
+      overflow: hidden; 
+    }
+
+    #wave-chart {
+      border-radius: 10px; /* Border radius for the chart */
+      max-width: 100%; /* Ensure chart stays within its container */
+      width: 100%; /* Set chart width to 100% */
+      height: 400px; /* Set initial height for the chart */
+    }
+
+    .button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 10px 20px;
+      background-color: #555;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background-color: #777;
+      color: rgb(14, 91, 110);
+      font-weight: 700;
+    }
+
+    /* Media queries for responsiveness */
+    @media only screen and (max-width: 768px) {
+      .background-img {
+        height: auto;
+        padding: 50px 20px;
+      }
+
+      .edu-content {
+        max-width: 90%;
+      }
+
+      #wave-chart {
+        height: 300px; /* Adjust chart height for smaller screens */
+      }
+    }
+  </style>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+
+<!-- Background Image Section -->
+<div class="background-img">
+  <!-- Home Button -->
+  <a href="index.html"><button class="button">Home</button></a>
+
+  <!-- Educational Content -->
+  <div class="edu-content">
+    <h2>About Waves</h2>
+    <p>Waves are oscillations that transfer energy without transferring matter.</p>
+    <p>They are classified into mechanical and electromagnetic waves based on how they travel.</p>
+
+    <h3>Mechanical Waves</h3>
+    <p>Mechanical waves require a medium (such as air, water, or solids) to travel.</p>
+    <p>Examples include sound waves and water waves.</p>
+
+    <h3>Electromagnetic Waves</h3>
+    <p>Electromagnetic waves can travel through vacuum (empty space) and do not require a medium.</p>
+    <p>Examples include light waves and radio waves.</p>
+  </div>
+</div>
+
+<!-- Wave Simulation Chart Container with Padding -->
+<div id="wave-chart-container">
+  <!-- Wave Simulation Chart -->
+  <div id="wave-chart"></div>
+
+  <!-- Input Controls for Parameters -->
+  <label for="frequency-slider">Frequency:</label>
+  <input id="frequency-slider" type="range" min="0" max="10" value="1" step="0.1" onchange="updateChart()">
+
+  <label for="amplitude-slider">Amplitude:</label>
+  <input id="amplitude-slider" type="range" min="0" max="1" value="0.5" step="0.05" onchange="updateChart()">
+
+  <label for="wavelength-slider">Wavelength:</label>
+  <input id="wavelength-slider" type="range" min="1" max="10" value="5" step="0.5" onchange="updateChart()">
+</div>
+
+<!-- JavaScript Functions -->
+<script>
+  let time = 0;  // Initial time value
+  const interval = 0.1;  // Interval for updating the wave (adjust as needed)
+
+  // Initialize chart data and layout
+  const data = [{
+    x: Array.from({ length: 100 }, (_, i) => i / 10),  // Adjusted x-axis values for smoother wave
+    y: generateWaveData(1, 0.5, 5),  // Initial wave data (frequency, amplitude, wavelength)
+    type: 'scatter',        // Chart type (line chart)
+    mode: 'lines',          // Line mode for smooth lines
+    line: {
+      color: 'green',      // Line color (green)
+      width: 2              
+    }
+  }];
+
+  const layout = {
+    title: 'Moving Wave Simulation',  // Chart title
+    xaxis: {
+      title: 'Time'           // X-axis label
+    },
+    yaxis: {
+      title: 'Amplitude',     // Y-axis label
+      range: [-1, 1]          // Y-axis range for better visualization
+    },
+    plot_bgcolor: '#111',     // Plot background color (dark)
+    paper_bgcolor: '#111'     // Paper background color (dark)
+  };
+
+  // Create the initial Plotly.js chart
+  Plotly.newPlot('wave-chart', data, layout);
+
+  // Function to update chart based on slider values
+  function updateChart() {
+    const frequency = document.getElementById('frequency-slider').value;
+    const amplitude = document.getElementById('amplitude-slider').value;
+    const wavelength = document.getElementById('wavelength-slider').value;
+
+    // Update chart data with new wave data
+    Plotly.restyle('wave-chart', 'y', [generateWaveData(frequency, amplitude, wavelength)]);
+  }
+
+  // Function to generate wave data based on parameters
+  function generateWaveData(frequency, amplitude, wavelength) {
+    const timeValues = Array.from({ length: 100 }, (_, i) => i / 10);  // Adjusted time values for smoother wave
+    const waveValues = timeValues.map(t => amplitude * Math.sin(2 * Math.PI * frequency * (t - time) / wavelength));
+    return waveValues;
+  }
+
+  // Function to animate the wave (called every interval)
+  function animateWave() {
+    time += interval;  // Increment time for animation
+    updateChart();     // Update the chart with new wave data
+    requestAnimationFrame(animateWave);  // Request next animation frame
+  }
+
+  // Start the wave animation
+  animateWave();
+
+  // Function to navigate to the home page
+  function goToHome() {
+    window.location.href = 'index.html';  // Replace 'index.html' with your main page URL
+  }
+</script>
+
+</body>
+</html>

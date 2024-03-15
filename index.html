@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            position: relative;
+            min-height: 100vh;
+            margin-bottom: 80px; /* Adjust margin for footer height */
+        }
+
+        footer {
+            position: fixed;
+            font-size: 12px;
+            bottom: 0;
+            width: 100%;
+            background-color: #1f1f1f;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        footer.copyright {
+            margin-top: 20px;
+        }
+
+        .contact-info p {
+            margin: 5px 0;
+        }
+
+        /* Media query for smaller screens */
+        @media (max-width: 768px) {
+            footer {
+                padding: 15px 0; /* Adjust padding for smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="sidebar">
+                <li onclick = hideSidebar()><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="26" viewBox="0 -960 960 960" width="26"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></a></li>
+                <li><a href="#">Home</a></li>
+                <li><a href="index3.html">About</a></li>
+                <li><a href="index1.html">Waves Simulation</a></li>
+                <li><a href="index2.html">Fields Interaction</a></li>
+                <li><a href="#footer">Contact</a></li>
+            </ul>
+            <ul>
+                <img src="wave.svg" alt="logo" >
+                <li class="hideOnMobile"><a href="#">Home</a></li>
+                <li class="hideOnMobile"><a href="index3.html">About</a></li>
+                <li class="hideOnMobile"><a href="index1.html">Waves Simulation</a></li>
+                <li class="hideOnMobile"><a href="index2.html">Fields Interaction</a></li>
+                <li class="hideOnMobile"><a href="#footer">Contact</a></li>
+                <li class="menu-button" onclick = showSidebar()><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="26" viewBox="0 -960 960 960" width="26"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="hero-content">
+            <p class="hero-title">Welcome to Visualizing Waves and Fields: Interactive Physics!</p>
+            <h2 class="hero-description">Dive into the fascinating world of physics with our immersive web application.</h2>
+            <button><a href="index1.html"><span></span>Explore Now</a></button>
+          </div>
+          <section class="about">
+            <h2 class="about__title">About</h2>
+            <p class="description">Visualizing Waves and Fields: Interactive Physics</p>
+            <p class="about__description">Our web app combines interactive simulations with educational content for a deeper understanding of waves and fields. Join us and explore physics like never before!</p>
+            <button><a href="about-project.html"><span></span>Learn More</a></button>
+          </section>
+    </main>
+    <footer id="footer">
+        <div class="contact-info">
+            <p>Contact Us:</p>
+            <p>Email: paulothenjugush@gmail.com</p>
+            <p>Phone: +254795892600</p>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2024 Waves and Visualization Web App. All Rights Reserved.</p>
+        </div>
+    </footer>
+    <script>
+        function showSidebar(){
+            const sideBar = document.querySelector(".sidebar");
+            sideBar.style.display = 'flex';
+        }
+        function hideSidebar(){
+            const sideBar = document.querySelector(".sidebar");
+            sideBar.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
